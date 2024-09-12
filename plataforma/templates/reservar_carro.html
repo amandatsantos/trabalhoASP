@@ -49,8 +49,18 @@
     <script>
         $(document).ready(function() {
             $('#reservaForm').on('submit', function(event) {
-                event.preventDefault();  // Impede o envio padrão do formulário
+                // Pega os valores das datas
+                const dataInicio = new Date($('#data_inicio').val());
+                const dataFim = new Date($('#data_fim').val());
                 
+                // Valida se a data de fim é anterior à data de início
+                if (dataFim < dataInicio) {
+                    alert("A data de fim não pode ser anterior à data de início.");
+                    event.preventDefault();  // Impede o envio do formulário
+                    return;
+                }
+    
+                // Se a validação passar, continua o envio
                 $.ajax({
                     type: 'POST',
                     url: window.location.href,  // Envia a requisição para a mesma URL
