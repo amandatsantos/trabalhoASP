@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+
+{% block 'titulo' %}Login{% endblock %}
+{% block 'body' %}
+<h2>Cadastro</h2>
+<style>
+    .form-container {
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        background-color: #f9f9f9;
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    .form-group label {
+        display: block;
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
+
+    .form-group input, .form-group textarea {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+    }
+
+    .form-group input[type="submit"] {
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        padding: 10px 15px;
+        font-size: 16px;
+        cursor: pointer;
+        border-radius: 4px;
+    }
+
+    .form-group input[type="submit"]:hover {
+        background-color: #0056b3;
+    }
+</style>
+
+<div class="form-container">
+    <form method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="{{ form.username.id_for_label }}">Username:</label>
+            {{ form.username }}
+        </div>
+        <div class="form-group">
+            <label for="{{ form.email.id_for_label }}">Nome Completo:</label>
+            {{ form.nome }}
+        </div>
+        <div class="form-group">
+            <label for="{{ form.email.id_for_label }}">Email:</label>
+            {{ form.email }}
+        </div>
+        <div class="form-group">
+            <label for="{{ form.password1.id_for_label }}">Senha:</label>
+            {{ form.password1 }}
+        </div>
+        <div class="form-group">
+            <label for="{{ form.password2.id_for_label }}">Confirmar Senha:</label>
+            {{ form.password2 }}
+        </div>
+        <div class="form-group">
+            <label for="{{ form.idade.id_for_label }}">Idade:</label>
+            {{ form.idade }}
+        </div>
+        <div class="form-group">
+            <label for="{{ form.telefone.id_for_label }}">Telefone:</label>
+            {{ form.telefone }}
+        </div>
+        <div class="form-group">
+            <label for="{{ form.endereco.id_for_label }}">Endereço:</label>
+            {{ form.endereco }}
+        </div>
+        <div class="form-group">
+            <input type="submit" value="Cadastrar">
+        </div>
+    </form>
+</div>
+{% endblock %}

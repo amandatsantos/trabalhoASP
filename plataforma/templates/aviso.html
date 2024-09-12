@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block 'titulo' %}Reserva{% endblock %}
+{% block 'body' %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aviso - Reserva Confirmada</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .centered {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .card {
+            max-width: 500px;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container centered">
+    <div class="card text-center">
+        <div class="card-header bg-success text-white">
+            Reserva Confirmada
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">Documentos Necessários</h5>
+            <p class="card-text">
+                Sua reserva foi registrada com sucesso!<br>
+                Compareça à locadora com os seguintes documentos para finalizar o processo e acertar os detalhes do empréstimo:
+            </p>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">Documento de Identidade (RG ou CNH)</li>
+                <li class="list-group-item">Comprovante de Residência</li>
+                <li class="list-group-item">Cartão de Crédito para caução</li>
+            </ul>
+            <a href="{% url 'home' %}" class="btn btn-primary mt-3">Voltar à Página Inicial</a>
+        </div>
+        <div class="card-footer text-muted">
+            Obrigado por utilizar nossos serviços!
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap JS and dependencies -->
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+</html>
+{% endblock %}

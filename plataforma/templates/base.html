@@ -1,0 +1,87 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br"><head>
+
+    <title>{% block title %}{% endblock %}</title>
+    {% load bootstrap5 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+</head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../../../favicon.ico">
+
+    <title>Template de capa, usando Bootstrap.</title>
+
+    <!-- Principal CSS do Bootstrap -->
+    <link href="../../dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Estilos customizados para esse template -->
+    <link href="cover.css" rel="stylesheet">
+  </head>
+
+  <body class="text-center">
+
+    <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+      <header class="masthead mb-auto">
+        <div class="inner">
+          <h3 class="masthead-brand"><a class="navbar-brand" href="{% url 'home' %}">Tavares & Flores</a></h3>
+          <nav class="nav nav-masthead justify-content-center">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'home' %}">Home</a>
+                        </li>
+                        {% if user.is_authenticated %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'reservas_confirmadas' %}">Minhas Reservas</a>
+                        </li>
+                        <li class="nav-item">
+                            <!-- Formulário para logout via POST -->
+                            <form id="logout-form" method="POST" action="{% url 'logout' %}" style="display:inline;">
+                                {% csrf_token %}
+                                <button type="submit" class="nav-link btn btn-link" style="padding: 0;">Logout</button>
+                            </form>
+                        </li>
+                        {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'login' %}">Login</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'cadastro' %}">Cadastre-se</a>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </nav>
+        </div>
+        <br>
+        <br>
+        <br>
+      </header>
+
+      <main role="main" class="inner cover">
+        {% block 'body' %}{% endblock  %}
+      </main>
+
+      <footer class="mastfoot mt-auto">
+        <div class="inner">
+
+        </div>
+      </footer>
+    </div>
+
+    <!-- Principal JavaScript do Bootstrap
+    ================================================== -->
+    <!-- Foi colocado no final para a página carregar mais rápido -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
+    <script src="../../assets/js/vendor/popper.min.js"></script>
+    <script src="../../dist/js/bootstrap.min.js"></script>

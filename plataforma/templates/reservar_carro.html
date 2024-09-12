@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+
+
+{% block 'titulo' %}Reserva{% endblock %}
+{% block 'body' %}
+<h2>Reserva</h2>
+<div class="container mt-5">
+        <h1>Reservar Carro</h1>
+        <form id="reservaForm" method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="data_inicio">Data de Início</label>
+                <input type="date" class="form-control" id="data_inicio" name="data_inicio" required>
+            </div>
+            <div class="form-group">
+                <label for="data_fim">Data de Fim</label>
+                <input type="date" class="form-control" id="data_fim" name="data_fim" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Reservar</button>
+        </form>
+        
+        <!-- Modal -->
+        <div class="modal fade" id="reservaModal" tabindex="-1" role="dialog" aria-labelledby="reservaModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="reservaModalLabel">Reserva Confirmada</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- Mensagem será inserida aqui via JavaScript -->
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                        <a href="{% url 'home' %}" class="btn btn-primary">Voltar à Página Inicial</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- jQuery and Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    
+    <script>
+        $(document).ready(function() {
+            $('#reservaForm').on('submit', function(event) {
+                event.preventDefault();  // Impede o envio padrão do formulário
+                
+                $.ajax({
+                    type: 'POST',
+                    url: window.location.href,  // Envia a requisição para a mesma URL
+                    data: $(this).serialize(),  // Serializa os dados do formulário
+                    success: function(response) {
+                        if (response.success) {
+                            // Exibe o modal com a mensagem de sucesso
+                            $('#reservaModal .modal-body').text(response.message);
+                            $('#reservaModal').modal('show');
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Erro ao realizar reserva:', error);
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
+{% endblock %}

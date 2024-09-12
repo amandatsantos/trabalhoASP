@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+{% block 'body' %}
+
+
+<div class="container mt-5">
+    <h1></h1>
+
+    <!-- Lista de Carros -->
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Imagem</th>
+                <th>Detalhes</th>
+                <th>Preço</th>
+                <th>Ação</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for carro in carros %}
+            <tr>
+                <td>
+                    <img src="{{ carro.imagem.url }}" alt="{{ carro.modelo }}" style="width: 100px; height: auto;">
+                </td>
+                <td>
+                    <strong>{{ carro.marca }} {{ carro.modelo }}</strong> - {{ carro.ano }}
+                </td>
+                <td>
+                    R$ {{ carro.preco_diaria|floatformat:2 }}
+                </td>
+                <td>
+                    <button class="btn btn-primary" data-toggle="modal" data-target="#reservaModal" data-carro-id="{{ carro.id }}">
+                        Reservar
+                    </button>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="4" class="text-center">Nenhum carro disponível.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- Modal HTML -->
+    <div class="modal fade" id="reservaModal" tabindex="-1" role="dialog" aria-labelledby="reservaModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="reservaModalLabel">Reservar Carro</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="reservaForm" method="post" action="">
+                        {% csrf_token %}
+                        <input type="hidden" id="carro_id" name="carro_id">
+                        <div class="form-group">
+                            <label for="data_inicio">Data de Início</label>
+                            <input type="date" class="form-control" id="data_inicio" name="data_inicio" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="data_fim">Data de Fim</label>
+                            <input type="date" class="form-control" id="data_fim" name="data_fim" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Reservar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap JS and dependencies -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+    $('#reservaModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget); // Botão que acionou o modal
+        var carroId = button.data('carro-id'); // Extrai o ID do carro dos atributos data
+        
+        var modal = $(this);
+        modal.find('.modal-body #carro_id').val(carroId); // Define o valor do campo oculto com o ID do carro
+        
+        // Atualiza a ação do formulário para incluir o ID do carro
+        var actionUrl = "{% url 'reservar_carro' 0 %}".replace('0', carroId);
+        modal.find('#reservaForm').attr('action', actionUrl);
+    });
+</script>
+</body>
+</html>
+{% endblock %}

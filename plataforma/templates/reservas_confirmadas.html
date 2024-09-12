@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block 'titulo' %}Reservas Confirmadas{% endblock %}
+
+{% block 'body' %}
+<h2>Reservas Confirmadas</h2>
+
+<!-- Mensagem Importante -->
+<div class="alert alert-warning" role="alert">
+    <strong>Importante:</strong> REserva Feita! Compareça à locadora 24h antes com os seguintes documentos para finalizar o processo e acertar os detalhes do empréstimo:
+    <ul>
+        <li>Documento de Identidade (RG ou CNH)</li>
+        <li>Comprovante de Residência</li>
+        <li>Cartão de Crédito para caução</li>
+    </ul>
+</div>
+
+<!-- Tabela de Reservas -->
+<table class="table">
+    <thead>
+        <tr>
+            <th>Carro</th>
+            <th>Data de Início</th>
+            <th>Data de Fim</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for reserva in reservas %}
+        <tr>
+            <td>{{ reserva.carro.marca }} {{ reserva.carro.modelo }} - {{ reserva.carro.ano }}</td>
+            <td>{{ reserva.data_inicio }}</td>
+            <td>{{ reserva.data_fim }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="3">Nenhuma reserva encontrada.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<a href="{% url 'home' %}">Voltar à Página Inicial</a>
+{% endblock %}
